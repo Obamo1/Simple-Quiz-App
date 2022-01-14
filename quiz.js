@@ -1,206 +1,245 @@
-// select all elements
-const start = document.getElementById("start");
-const quiz = document.getElementById("quiz");
-const question = document.getElementById("question");
-const qImg = document.getElementById("qImg");
-const choiceA = document.getElementById("A");
-const choiceB = document.getElementById("B");
-const choiceC = document.getElementById("C");
-const counter = document.getElementById("counter");
-const timeGauge = document.getElementById("timeGauge");
-const progress = document.getElementById("progress");
-const scoreDiv = document.getElementById("scoreContainer");
-
-// create our questions
-let questions = [
+const questions = [
     {
-        question : "A solar cell converts light energy into __________",
-        imgSrc : "img/solarcell.jpg",
-        choiceA : "Sound energy",
-        choiceB : "Thermal energy",
-        choiceC : "Electrical energy",
-        correct : "C"
-    },{
-        question : "Material used for making solar cell is _________",
-        imgSrc : "img/solarcell.jpg",
-        choiceA : "Silicon",
-        choiceB : "Carbon",
-        choiceC : "Magnesium",
-        correct : "A"
-    },{
-        question : "There are usually 2 major types of charge controller",
-        imgSrc : "img/scc.jpg",
-        choiceA : "True",
-        choiceB : "False",
-        choiceC : "I don't know",
-        correct : "A"
-    },{
-        question : "The Power Inverter is the _________ of the solar energy system",
-        imgSrc : "img/inverter.jpg",
-        choiceA : "Body",
-        choiceB : "Transformer",
-        choiceC : "Heart",
-        correct : "C"
-    },{
-        question : "The capacity of battery is expressed in:",
-        imgSrc : "img/battery.png",
-        choiceA : "Amperes",
-        choiceB : "Ampere-hours",
-        choiceC : "Watts",
-        correct : "B"
-    },{
-        question : "The output of the Solar panel is _________",
-        imgSrc : "img/solarcell.jpg",
-        choiceA : "Alternative Current",
-        choiceB : "Solar Current",
-        choiceC : "Direct Current",
-        correct : "C"
-    },{
-        question : "Photovoltaic cell or solar cell converts _________",
-        imgSrc : "img/solarcell.jpg",
-        choiceA : "Thermal energy into electricity",
-        choiceB : "Electromagnetic radiation directly into electricity",
-        choiceC : "Solar radiation into kinetic energy",
-        correct : "B"
-    },{
-        question : "Which of the following is a nonrenewable energy resource?",
-        imgSrc : "img/solarpanel.jpg",
-        choiceA : "Solar",
-        choiceB : "Methane",
-        choiceC : "Coal",
-        correct : "C"
-    },{
-        question : "Solar energy stored in material such as wood, grain, sugar, and municipal waste is called __________.",
-        imgSrc : "img/solarpanel.jpg",
-        choiceA : "Biomass",
-        choiceB : "Fossil fuels",
-        choiceC : "Geothermal energy",
-        correct : "A"
-    },{
-        question : "Direct Solar energy is used for",
-        imgSrc : "img/solarpanel.jpg",
-        choiceA : "Water heating",
-        choiceB : "Drying",
-        choiceC : "All of the above",
-        correct : "C"
-    }
+        question: "A solar cell converts light energy into __________",
+        optionA: "Sound energy",
+        optionB: "Thermal energy",
+        optionC: "Electrical energy",       
+        correctOption: "optionC"
 
-];
+    },
 
-// create some variables
+    {
+        question: "Material used for making solar cell is _________",
+        optionA: "Silicon",
+        optionB: "Carbon",
+        optionC: "Magnesium",        
+        correctOption: "optionA"
+    },
 
-const lastQuestion = questions.length - 1;
-let runningQuestion = 0;
-let count = 0;
-const questionTime = 10; // 10s
-const gaugeWidth = 150; // 150px
-const gaugeUnit = gaugeWidth / questionTime;
-let TIMER;
-let score = 0;
+    {
+        question: "There are usually 2 major types of charge controller",
+        optionA: "True",
+        optionB: "False",
+        optionC: "I don't know",        
+        correctOption: "optionA"
+    },
 
-// render a question
-function renderQuestion(){
-    let q = questions[runningQuestion];
+    {
+        question: "The Power Inverter is the _________ of the solar energy system",
+        optionA: "Body",
+        optionB: "Transformer",
+        optionC: "Heart",        
+        correctOption: "optionC"
+    },
+
+    {
+        question: "The capacity of battery is expressed in:",
+        optionA: "Amperes",
+        optionB: "Ampere-hours",
+        optionC: "Watts",       
+        correctOption: "optionB"
+    },
     
-    question.innerHTML = "<p>"+ q.question +"</p>";
-    qImg.innerHTML = "<img src="+ q.imgSrc +">";
-    choiceA.innerHTML = q.choiceA;
-    choiceB.innerHTML = q.choiceB;
-    choiceC.innerHTML = q.choiceC;
-}
+    {
+        question: "The output of the Solar panel is _________",
+        optionA: "Alternative Current",
+        optionB: "Solar Current",
+        optionC: "Direct Current",        
+        correctOption: "optionC"
+    },
 
-start.addEventListener("click",startQuiz);
+    {
+        question: "Photovoltaic cell or solar cell converts _________",
+        optionA: "Thermal energy into electricity",
+        optionB: "Electromagnetic radiation directly into electricity",
+        optionC: "Solar radiation into kinetic energy",        
+        correctOption: "optionB"
+    },
 
-// start quiz
-function startQuiz(){
-    start.style.display = "none";
-    renderQuestion();
-    quiz.style.display = "block";
-    renderProgress();
-    renderCounter();
-    TIMER = setInterval(renderCounter,1000); // 1000ms = 1s
-}
+    {
+        question: "Which of the following is a nonrenewable energy resource?",
+        optionA: "Solar",
+        optionB: "Methane",
+        optionC: "Coal",        
+        correctOption: "optionC"
+    },
+    
+    {
+        question: "Solar energy stored in material such as wood, grain, sugar, and municipal waste is called __________.",
+        optionA: "Biomass",
+        optionB: "Fossil fuels",
+        optionC: "Geothermal energy",       
+        correctOption: "optionA"
+    },
 
-// render progress
-function renderProgress(){
-    for(let qIndex = 0; qIndex <= lastQuestion; qIndex++){
-        progress.innerHTML += "<div class='prog' id="+ qIndex +"></div>";
-    }
-}
+    {
+        question: "Direct Solar energy is used for",
+        optionA: "Water heating",
+        optionB: "Drying",
+        optionC: "All of the above",        
+        correctOption: "optionC"
+    },
 
-// counter render
+]
 
-function renderCounter(){
-    if(count <= questionTime){
-        counter.innerHTML = count;
-        timeGauge.style.width = count * gaugeUnit + "px";
-        count++
-    }else{
-        count = 0;
-        // change progress color to red
-        answerIsWrong();
-        if(runningQuestion < lastQuestion){
-            runningQuestion++;
-            renderQuestion();
-        }else{
-            // end the quiz and show the score
-            clearInterval(TIMER);
-            scoreRender();
+
+let shuffledQuestions = [] //empty array to hold shuffled selected questions
+
+function handleQuestions() { 
+    //function to shuffle and push 10 questions to shuffledQuestions array
+    while (shuffledQuestions.length <= 9) {
+        const random = questions[Math.floor(Math.random() * questions.length)]
+        if (!shuffledQuestions.includes(random)) {
+            shuffledQuestions.push(random)
         }
     }
 }
 
-// checkAnwer
 
-function checkAnswer(answer){
-    if( answer == questions[runningQuestion].correct){
-        // answer is correct
-        score++;
-        // change progress color to green
-        answerIsCorrect();
-    }else{
-        // answer is wrong
-        // change progress color to red
-        answerIsWrong();
+let questionNumber = 1
+let playerScore = 0  
+let wrongAttempt = 0 
+let indexNumber = 0
+
+// function for displaying next question in the array to dom
+function NextQuestion(index) {
+    handleQuestions()
+    const currentQuestion = shuffledQuestions[index]
+    document.getElementById("question-number").innerHTML = questionNumber
+    document.getElementById("player-score").innerHTML = playerScore
+    document.getElementById("display-question").innerHTML = currentQuestion.question;
+    document.getElementById("option-one-label").innerHTML = currentQuestion.optionA;
+    document.getElementById("option-two-label").innerHTML = currentQuestion.optionB;
+    document.getElementById("option-three-label").innerHTML = currentQuestion.optionC;
+
+}
+
+
+function checkForAnswer() {
+    const currentQuestion = shuffledQuestions[indexNumber] //gets current Question 
+    const currentQuestionAnswer = currentQuestion.correctOption //gets current Question's answer
+    const options = document.getElementsByName("option"); //gets all elements in dom with name of 'option' (in this the radio inputs)
+    let correctOption = null
+
+    options.forEach((option) => {
+        if (option.value === currentQuestionAnswer) {
+            //get's correct's radio input with correct answer
+            correctOption = option.labels[0].id
+        }
+    })
+   
+    //checking to make sure a radio input has been checked or an option being chosen
+    if (options[0].checked === false && options[1].checked === false && options[2].checked === false && options[3].checked == false) {
+        document.getElementById('option-modal').style.display = "flex"
     }
-    count = 0;
-    if(runningQuestion < lastQuestion){
-        runningQuestion++;
-        renderQuestion();
-    }else{
-        // end the quiz and show the score
-        clearInterval(TIMER);
-        scoreRender();
+
+    //checking if checked radio button is same as answer
+    options.forEach((option) => {
+        if (option.checked === true && option.value === currentQuestionAnswer) {
+            document.getElementById(correctOption).style.backgroundColor = "green"
+            playerScore++
+            indexNumber++
+            //set to delay question number till when next question loads
+            setTimeout(() => {
+                questionNumber++
+            }, 1000)
+        }
+
+        else if (option.checked && option.value !== currentQuestionAnswer) {
+            const wrongLabelId = option.labels[0].id
+            document.getElementById(wrongLabelId).style.backgroundColor = "red"
+            document.getElementById(correctOption).style.backgroundColor = "green"
+            wrongAttempt++
+            indexNumber++
+            //set to delay question number till when next question loads
+            setTimeout(() => {
+                questionNumber++
+            }, 1000)
+        }
+    })
+}
+
+
+
+//called when the next button is called
+function handleNextQuestion() {
+    checkForAnswer()
+    unCheckRadioButtons()
+    //delays next question displaying for a second
+    setTimeout(() => {
+        if (indexNumber <= 9) {
+            NextQuestion(indexNumber)
+        }
+        else {
+            handleEndGame()
+        }
+        resetOptionBackground()
+    }, 1000);
+}
+
+//sets options background back to null after display the right/wrong colors
+function resetOptionBackground() {
+    const options = document.getElementsByName("option");
+    options.forEach((option) => {
+        document.getElementById(option.labels[0].id).style.backgroundColor = ""
+    })
+}
+
+// unchecking all radio buttons for next question(can be done with map or foreach loop also)
+function unCheckRadioButtons() {
+    const options = document.getElementsByName("option");
+    for (let i = 0; i < options.length; i++) {
+        options[i].checked = false;
     }
 }
 
-// answer is correct
-function answerIsCorrect(){
-    document.getElementById(runningQuestion).style.backgroundColor = "#0f0";
+// function for when all questions being answered
+function handleEndGame() {
+    let remark = null
+    let remarkColor = null
+
+    // condition check for player remark and remark color
+    if (playerScore <= 3) {
+        remark = "Bad Grades, Keep Practicing."
+        remarkColor = "red"
+    }
+    else if (playerScore >= 4 && playerScore < 7) {
+        remark = "Average Grades, You can do better."
+        remarkColor = "orange"
+    }
+    else if (playerScore >= 7) {
+        remark = "Excellent, Keep the good work going."
+        remarkColor = "green"
+    }
+    const playerGrade = (playerScore / 10) * 100
+
+    //data to display to score board
+    document.getElementById('remarks').innerHTML = remark
+    document.getElementById('remarks').style.color = remarkColor
+    document.getElementById('grade-percentage').innerHTML = playerGrade
+    document.getElementById('wrong-answers').innerHTML = wrongAttempt
+    document.getElementById('right-answers').innerHTML = playerScore
+    document.getElementById('score-modal').style.display = "flex"
+
 }
 
-// answer is Wrong
-function answerIsWrong(){
-    document.getElementById(runningQuestion).style.backgroundColor = "#f00";
+//closes score modal and resets game
+function closeScoreModal() {
+    questionNumber = 1
+    playerScore = 0
+    wrongAttempt = 0
+    indexNumber = 0
+    shuffledQuestions = []
+    NextQuestion(indexNumber)
+    document.getElementById('score-modal').style.display = "none"
 }
 
-// score render
-function scoreRender(){
-    scoreDiv.style.display = "block";
-    
-    // calculate the amount of question percent answered by the user
-    const scorePerCent = Math.round(100 * score/questions.length);
-    
-    // choose the image based on the scorePerCent
-    let img = (scorePerCent >= 80) ? "img/5.png" :
-              (scorePerCent >= 60) ? "img/4.png" :
-              (scorePerCent >= 40) ? "img/3.png" :
-              (scorePerCent >= 20) ? "img/2.png" :
-              "img/1.png";
-    
-    scoreDiv.innerHTML = "<img src="+ img +">";
-    scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
+//function to close warning modal
+function closeOptionModal() {
+    document.getElementById('option-modal').style.display = "none"
 }
+
+
 
 
 
